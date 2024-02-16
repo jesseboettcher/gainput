@@ -319,7 +319,21 @@ static void OnDeviceConnected(void* inContext, IOReturn inResult, void* inSender
 		device->buttonDialect_[0x09] = PadButtonSelect;
 		device->buttonDialect_[0x0a] = PadButtonStart;
 	}
-	else {
+	else if (vendorId == 0x0079 && productId == 0x0011) // vilros retro gaming NES controller
+	{
+		device->minAxis_ = 0;
+		device->maxAxis_ = 256;
+		device->minTriggerAxis_ = device->minAxis_;
+		device->maxTriggerAxis_ = device->maxAxis_;
+		device->axisDialect_[kHIDUsage_GD_X] = PadButtonLeftStickX;
+		device->axisDialect_[kHIDUsage_GD_Y] = PadButtonLeftStickY;
+		device->buttonDialect_[0x02] = PadButtonA;
+		device->buttonDialect_[0x03] = PadButtonB;
+		device->buttonDialect_[0x0A] = PadButtonStart;
+		device->buttonDialect_[0x09] = PadButtonSelect;
+	}
+	else
+	{
 		printf("Found unknown pad, disabled. VendorID: 0x%lX ProductID: 0x%lX.\n", vendorId, productId);
 	}
 
